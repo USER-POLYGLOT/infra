@@ -1,0 +1,64 @@
+name: CD - Multi Service Deployment
+
+on:
+  workflow_run:
+    workflows: 
+      - "CI - Spring Boot Backend"
+      - "CI - Spring Boot Translate Service"
+      - "CI - Frontend React App"
+    types:
+      - completed
+
+jobs:
+  k8s-deploy:
+    runs-on: self-hosted   # self-hosted runner with kubectl access to cluster
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: us-east-1
+
+    steps:
+      # 1️⃣ Checkout manifests repo
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      # 2️⃣ Apply PV, PVC, StatefulSets
+      - name: Apply Storage Manifests
+        run: |
+          kubectl apply -f first/pv/
+
+      # 3️⃣ Apply Network Policies
+      - name: Apply Network Policies
+        run: |
+          kubectl apply -f first/newnet/
+
+      # 4️⃣ Apply Services
+      - name: Apply Services
+        run: |
+          kubectl apply -f manifest/ai/ai-svc.yaml
+          kubectl apply -f manifest/backend/backend-svc.yaml
+          kubectl apply -f manifest/frontend/front-svc.yaml
+
+      # 5️⃣ Apply Deployments
+      - name: Apply Deployments
+        run: |
+          kubectl apply -f manifest/ai/ai-deploy.yaml
+          kubectl apply -f manifest/backend/backend-d.yaml
+          kubectl apply -f manifest/frontend/front-deploy.yaml
+
+      # 6️⃣ Apply Ingress / Ingress Controller
+      - name: Apply Ingress
+        run: |
+          kubectl apply -f first/ingress/
+
+      # 7️⃣ Apply HPA / Metrics
+      - name: Apply HPA / Metrics
+        run: |
+          kubectl apply -f first/hpa/
+
+      # 8️⃣ Rollout Status Check
+      - name: Rollout Status
+        run: |
+          kubectl rollout status deployment/ai-deployment || true
+          kubectl rollout status deployment/backend-deployment || true
+          kubectl rollout status deployment/frontend-deployment || true
