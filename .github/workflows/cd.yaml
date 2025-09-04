@@ -11,7 +11,7 @@ on:
 
 jobs:
   k8s-deploy:
-    runs-on: self-hosted   # self-hosted runner with kubectl access to cluster
+    runs-on: self-hosted   # self-hosted runner with kubectl access to cluste
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
