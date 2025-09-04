@@ -1,17 +1,13 @@
 name: CD - Multi Service Deployment
 
 on:
-  workflow_run:
-    workflows: 
-      - "CI - Spring Boot Backend"
-      - "CI - Spring Boot Translate Service"
-      - "CI - Frontend React App"
-    types:
-      - completed
+  push:
+    branches: 
+      - main
 
 jobs:
   k8s-deploy:
-    runs-on: self-hosted   # self-hosted runner with kubectl access to cluste
+    runs-on: self-hosted   # self-hosted runner with kubectl access to cluster
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
