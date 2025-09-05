@@ -48,8 +48,8 @@ jobs:
         run: |
           kubectl delete secret aws-credentials --ignore-not-found
           kubectl create secret generic aws-credentials \
-            --from-literal=accesskey=${{ secrets.AWS_ACCESS_KEY_ID }} \
-            --from-literal=secretkey=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            --from-literal=accessKey=${{ secrets.AWS_ACCESS_KEY_ID }} \
+            --from-literal=secretKey=${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       # Apply all manifests at once
       - name: Apply Kubernetes manifests
