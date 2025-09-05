@@ -43,9 +43,6 @@ jobs:
           cp -r /home/ubuntu/action-runner/_work/infra/infra/backend/kubernetes/* all-k8s/ || true
           cp -r /home/ubuntu/action-runner/_work/infra/infra/ai/kubernetes/* all-k8s/ || true
 
-      - name: Run setup Script
-        run: bash install-kube.sh
-
       # (Optional) configure AWS/K8s secrets if needed
       - name: Configure AWS Secret
         run: |
