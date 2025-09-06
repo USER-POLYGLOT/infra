@@ -39,9 +39,9 @@ jobs:
         run: |
           mkdir all-k8s
           cp -r kubernetes/* all-k8s/ || true
-          cp -r /home/ubuntu/action-runner/_work/infra/infra/frontend/kubernetes/* all-k8s/ || true
-          cp -r /home/ubuntu/action-runner/_work/infra/infra/backend/kubernetes/* all-k8s/ || true
-          cp -r /home/ubuntu/action-runner/_work/infra/infra/ai/kubernetes/* all-k8s/ || true
+          cp -r frontend/kubernetes/* all-k8s/ || true
+          cp -r backend/kubernetes/* all-k8s/ || true
+          cp -r ai/kubernetes/* all-k8s/ || true
 
       # (Optional) configure AWS/K8s secrets if needed
       - name: Configure AWS Secret
