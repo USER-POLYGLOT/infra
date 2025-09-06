@@ -19,6 +19,7 @@ jobs:
           repository: ${{ github.repository_owner }}/frontend
           token: ${{ secrets.GH_PAT }}
           ref: main
+          path: frontend
 
       - name: Checkout Backend
         uses: actions/checkout@v4
@@ -26,6 +27,7 @@ jobs:
           repository: ${{ github.repository_owner }}/backend
           token: ${{ secrets.GH_PAT }}
           ref: main
+          path: backend
 
       - name: Checkout AI Service
         uses: actions/checkout@v4
@@ -33,6 +35,7 @@ jobs:
           repository: ${{ github.repository_owner }}/ai
           token: ${{ secrets.GH_PAT }}
           ref: main
+          path: ai
 
       # Collect all manifests into one folder
       - name: Collect manifests
