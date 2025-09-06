@@ -56,11 +56,11 @@ jobs:
         run: kubectl apply -R -f all-k8s/
 
       # Verify rollouts service by service
-      - name: Verify Frontend rollout
-        run: kubectl rollout status deployment/frontend-deployment
-
       - name: Verify Backend rollout
         run: kubectl rollout status deployment/backend-deployment
 
       - name: Verify AI rollout
         run: kubectl rollout status deployment/ai-service
+
+      - name: Verify Frontend rollout
+        run: kubectl rollout status deployment/frontend-deployment
