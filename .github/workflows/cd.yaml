@@ -51,7 +51,13 @@ jobs:
           cp -r backend/kubernetes/* all-k8s/ || true
           cp -r ai/kubernetes/* all-k8s/ || true
 
-            # Install Prometheus + Grafana via Helm (Grafana as NodePort)
+
+      - name: Install Helm
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+          helm version
+
+      # Install Prometheus + Grafana via Helm (Grafana as NodePort)
       - name: Install monitoring stack
         run: |
           helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
