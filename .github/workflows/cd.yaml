@@ -12,6 +12,11 @@ jobs:
       - name: Checkout infra
         uses: actions/checkout@v4
 
+      - name: Bootstrap Kubernetes prereqs
+        run: |
+          chmod +x install-kube.sh
+          ./install-kube.sh
+
       # Checkout each microservice repo
       - name: Checkout Frontend
         uses: actions/checkout@v4
