@@ -46,6 +46,17 @@ jobs:
           cp -r backend/kubernetes/* all-k8s/ || true
           cp -r ai/kubernetes/* all-k8s/ || true
 
+            # Install Prometheus + Grafana via Helm (Grafana as NodePort)
+      - name: Install monitoring stack
+        run: |
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm repo update
+          helm upgrade --install monitoring prometheus-community/kube-prometheus-stack \
+            --namespace monitoring --create-namespace \
+            --set grafana.service.type=NodePort \
+            --set grafana.service.nodePort=32000
+
+
       # (Optional) configure AWS/K8s secrets if needed
       - name: Configure AWS Secret
         run: |
