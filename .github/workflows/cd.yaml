@@ -56,10 +56,10 @@ jobs:
           cp -r ai/kubernetes/* all-k8s/ || true
 
 
-      # - name: Install Helm
-      #   run: |
-      #     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-      #     helm version
+      - name: Install Helm
+        run: |
+          sudo -u ubuntu curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+          sudo -u ubuntu helm version
 
       # Install Prometheus + Grafana via Helm (Grafana as NodePort)
       - name: Install monitoring stack

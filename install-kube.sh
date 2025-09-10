@@ -41,8 +41,3 @@ sudo -u ubuntu kubectl wait --namespace ingress-nginx \
   --timeout=180s
 
 echo "Installing ingress controller done"
-
-sudo -u ubuntu helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-sudo -u ubuntu helm repo update
-
-echo "helm done"
