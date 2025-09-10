@@ -10,12 +10,14 @@ rm actions-runner.tar.gz
 
 sudo chown -R ubuntu:ubuntu /home/ubuntu/actions-runner
 
-# Configure runner
 sudo -u ubuntu ./config.sh --unattended \
-  --url https://github.com/USER-POLYGLOT \   
+  --url https://github.com/USER-POLYGLOT \
   --token "${runner_token}" \
-  --name org_runner \
-  --work "_work" >> /var/log/runner-config.log 2>&1
+  --name ec2-org-runner \
+  --labels self-hosted,linux,ec2 \
+  --work "_work"
+
+
 
 # Install service
 sudo ./svc.sh install
