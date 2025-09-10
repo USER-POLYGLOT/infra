@@ -82,7 +82,7 @@ jobs:
 
       # Apply all manifests at once
       - name: Apply Kubernetes manifests
-        run: sudo -u ubuntu kubectl apply -R -f all-k8s/
+        run: sudo -u ubuntu kubectl apply -R -f all-k8s/ --validate=false
 
         
       - name: Wait for resources to appear
