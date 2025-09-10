@@ -56,17 +56,17 @@ jobs:
           cp -r ai/kubernetes/* all-k8s/ || true
 
 
-      - name: Install Helm
-        run: |
-          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-          helm version
+      # - name: Install Helm
+      #   run: |
+      #     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+      #     helm version
 
       # Install Prometheus + Grafana via Helm (Grafana as NodePort)
       - name: Install monitoring stack
         run: |
-          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-          helm repo update
-          helm upgrade --install monitoring prometheus-community/kube-prometheus-stack \
+          sudo -u ubuntu helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          sudo -u ubuntu helm repo update
+          sudo -u ubuntu helm upgrade --install monitoring prometheus-community/kube-prometheus-stack \
             --namespace monitoring --create-namespace \
             --set grafana.service.type=NodePort \
             --set grafana.service.nodePort=32000
@@ -75,14 +75,14 @@ jobs:
       # (Optional) configure AWS/K8s secrets if needed
       - name: Configure AWS Secret
         run: |
-          kubectl delete secret aws-credentials --ignore-not-found
-          kubectl create secret generic aws-credentials \
+          sudo -u ubuntu kubectl delete secret aws-credentials --ignore-not-found
+          sudo -u ubuntu kubectl create secret generic aws-credentials \
             --from-literal=accessKey=${{ secrets.AWS_ACCESS_KEY_ID }} \
             --from-literal=secretKey=${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       # Apply all manifests at once
       - name: Apply Kubernetes manifests
-        run: kubectl apply -R -f all-k8s/
+        run: sudo -u ubuntu kubectl apply -R -f all-k8s/
 
         
       - name: Wait for resources to appear
@@ -90,10 +90,10 @@ jobs:
 
       # Verify rollouts service by service
       - name: Verify Backend rollout
-        run: kubectl rollout status deployment/backend-deployment
+        run: sudo -u ubuntu kubectl rollout status deployment/backend-deployment
 
       - name: Verify AI rollout
-        run: kubectl rollout status deployment/ai-service
+        run: sudo -u ubuntu kubectl rollout status deployment/ai-service
 
       - name: Verify Frontend rollout
-        run: kubectl rollout status deployment/frontend-deployment
+        run: sudo -u ubuntu kubectl rollout status deployment/frontend-deployment

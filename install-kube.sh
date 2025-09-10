@@ -25,19 +25,24 @@ done
 echo "Kubernetes control-plane setup complete."
 
 # sudo -u ubuntu
-kubectl apply -f https://raw.githubusercontent.com/vilasvarghese/docker-k8s/refs/heads/master/yaml/hpa/components.yaml
+sudo -u ubuntu kubectl apply -f https://raw.githubusercontent.com/vilasvarghese/docker-k8s/refs/heads/master/yaml/hpa/components.yaml
 
 echo "Installing metric server done"
 
 # sudo -u ubuntu 
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.0/deploy/static/provider/baremetal/deploy.yaml
+sudo -u ubuntu kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.0/deploy/static/provider/baremetal/deploy.yaml
 
 sleep 10
 # Wait for controller to be ready
 # sudo -u ubuntu 
-kubectl wait --namespace ingress-nginx \
+sudo -u ubuntu kubectl wait --namespace ingress-nginx \
   --for=condition=ready pod \
   --selector=app.kubernetes.io/component=controller \
   --timeout=180s
 
 echo "Installing ingress controller done"
+
+sudo -u ubuntu helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+sudo -u ubuntu helm repo update
+
+echo "helm done"
