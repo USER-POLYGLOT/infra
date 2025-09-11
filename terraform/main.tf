@@ -12,7 +12,7 @@ terraform {
     bucket         = "user-polyglot-terraform-state"   # must be globally unique in AWS
     key            = "k8s-cluster/terraform.tfstate"   # state file path inside the bucket
     region         = "us-east-1"                       # adjust if needed
-    dynamodb_table = "terraform-locks"                 # for state locking
+    dynamodb_table = "user-polyglot-terraform-locks"                 # for state locking
     encrypt        = true
   }
 }
