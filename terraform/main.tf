@@ -8,13 +8,13 @@ terraform {
     }
   }
 
-  # backend "s3" {
-  #   bucket         = "user-polyglot-terraform-state"   
-  #   key            = "env/USER-POLYGLOT/terraform.tfstate"   
-  #   region         = "us-east-1"                       
-  #   dynamodb_table = "user-polyglot-terraform-locks"   
-  #   encrypt        = true
-  # }
+  backend "s3" {
+    bucket         = "user-polyglot-terraform-state"     # must be globally unique
+    key            = "env/USER-POLYGLOT/terraform.tfstate"  
+    region         = "us-east-1"                         
+    dynamodb_table = "user-polyglot-terraform-locks"     
+    encrypt        = true                                
+  }
 }
 
 provider "aws" {
