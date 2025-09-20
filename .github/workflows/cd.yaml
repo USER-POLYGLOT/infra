@@ -69,7 +69,9 @@ jobs:
           sudo -u ubuntu helm upgrade --install monitoring prometheus-community/kube-prometheus-stack \
             --namespace monitoring --create-namespace \
             --set grafana.service.type=NodePort \
-            --set grafana.service.nodePort=32000
+            --set grafana.service.nodePort=32000 \
+            --set prometheus.service.type=NodePort \
+            --set prometheus.service.nodePort=32001
 
 
       # (Optional) configure AWS/K8s secrets if needed
